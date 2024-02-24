@@ -5,13 +5,15 @@
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
-  "main": "index.js",
+  "main": "bin/gendiff.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type": "module",
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^12.0.0"
+    "commander": "^12.0.0",
+    "fs": "^0.0.1-security"
   }
 }
