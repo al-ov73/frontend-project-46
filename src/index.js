@@ -1,5 +1,4 @@
-import parseFile from "./parsers.js";
-
+import parseFile from './parsers.js';
 
 const generateDiff = (file1, ext1, file2, ext2) => {
   const obj1 = parseFile(file1, ext1);
