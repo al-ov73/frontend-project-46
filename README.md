@@ -9,3 +9,6 @@
 
 Сравнение двух плоских json-файлов
 [![asciicast](https://asciinema.org/a/642754.svg)](https://asciinema.org/a/642754)
+
+Сравнение двух плоских yaml-файов
+[![asciicast](https://asciinema.org/a/642877.svg)](https://asciinema.org/a/642877)

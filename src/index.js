@@ -1,14 +1,5 @@
-const parseFile = (file, ext) => {
-  let obj;
-  switch (ext) {
-    case '.json':
-      obj = JSON.parse(file);
-      break;
-    default:
-      return 'unknown file extension :(';
-  }
-  return obj;
-};
+import parseFile from "./parsers.js";
+
 
 const generateDiff = (file1, ext1, file2, ext2) => {
   const obj1 = parseFile(file1, ext1);

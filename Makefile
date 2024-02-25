@@ -17,3 +17,6 @@ publish:
 	npm publish --dry-run
 
 .PHONY: test
+
+yaml:
+	gendiff __fixtures__/plainYml1.yml __fixtures__/plainYml2.yml
