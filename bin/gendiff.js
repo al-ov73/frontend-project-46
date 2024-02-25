@@ -22,7 +22,8 @@ program
     const extension2 = path.extname(absolutePath2);
     const file1 = fs.readFileSync(absolutePath1);
     const file2 = fs.readFileSync(absolutePath2);
-    generateDiff(file1, extension1, file2, extension2);
+    const result = generateDiff(file1, extension1, file2, extension2);
+    console.log(result);
   });
 
 program.parse();

@@ -3,6 +3,8 @@
 
 <a href="https://codeclimate.com/github/al-ov73/frontend-project-46/maintainability"><img src="https://api.codeclimate.com/v1/badges/d0037ab84ae3f7863cd3/maintainability" /></a>
 
+<a href="https://codeclimate.com/github/al-ov73/frontend-project-46/test_coverage"><img src="https://api.codeclimate.com/v1/badges/d0037ab84ae3f7863cd3/test_coverage" /></a>
+
 Примеры работы:
 
 Сравнение двух плоских json-файлов

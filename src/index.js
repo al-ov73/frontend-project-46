@@ -24,18 +24,18 @@ const generateDiff = (file1, ext1, file2, ext2) => {
   let result = '{\n';
   allKeys.sort().forEach((key) => {
     if (keys1.includes(key) && !keys2.includes(key)) {
-      result += `  -${key}: ${obj1[key]}\n`;
+      result += `  - ${key}: ${obj1[key]}\n`;
     } else if (!keys1.includes(key) && keys2.includes(key)) {
-      result += `  +${key}: ${obj2[key]}\n`;
+      result += `  + ${key}: ${obj2[key]}\n`;
     } else if ((obj1[key] === obj2[key])) {
-      result += `  ${key}: ${obj1[key]}\n`;
+      result += `    ${key}: ${obj1[key]}\n`;
     } else if ((obj1[key] !== obj2[key])) {
-      result += `  -${key}: ${obj1[key]}\n`;
-      result += `  +${key}: ${obj2[key]}\n`;
+      result += `  - ${key}: ${obj1[key]}\n`;
+      result += `  + ${key}: ${obj2[key]}\n`;
     }
   });
   result += '}';
-  console.log(result);
+  return result;
 };
 
 export default generateDiff;
