@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import generateDiff from '../src/index.js';
+
 import fs from 'fs';
 import path from 'path';
+import generateDiff from '../src/index.js';
 
 const program = new Command();
 
@@ -22,7 +23,6 @@ program
     const file1 = fs.readFileSync(absolutePath1);
     const file2 = fs.readFileSync(absolutePath2);
     generateDiff(file1, extension1, file2, extension2);
-  })
+  });
 
-  
 program.parse();
