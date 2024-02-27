@@ -22,4 +22,5 @@ yaml:
 	gendiff __fixtures__/plainYml1.yml __fixtures__/plainYml2.yml
 
 start:
-	gendiff __fixtures__/recurseJson1.json __fixtures__/recurseJson2.json
+	node bin/gendiff.js __fixtures__/recurseJson1.json __fixtures__/recurseJson2.json
+
