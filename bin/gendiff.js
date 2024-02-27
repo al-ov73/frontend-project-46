@@ -5,7 +5,6 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import generateDiff from '../src/index.js';
-import formatToStylish from '../src/formaters.js';
 
 const program = new Command();
 
