@@ -14,3 +14,4 @@ rules:
     - js: always
   linebreak-style: "off"
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
+  no-param-reassign: 0

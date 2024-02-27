@@ -1,15 +1,15 @@
-const space = ' '
+const space = ' ';
 
-const formatToStylish = (diff, depth=1, result = '') => {
+const formatToStylish = (diff, depth = 1, result = '') => {
   const allKeys = Object.keys(diff).reduce((acc, item) => {
     if (acc.includes(item)) {
       return acc;
     }
     return [...acc, item];
   }, []);
-  const indent = space.repeat(depth*4 - 2);
+  const indent = space.repeat(depth * 4 - 2);
   if (depth === 1) {
-    result += '{\n'
+    result += '{\n';
   }
   allKeys.sort().forEach((key) => {
     if (diff[key][0] === 'removed') {
@@ -23,12 +23,12 @@ const formatToStylish = (diff, depth=1, result = '') => {
       result += `${indent}+ ${key}: ${diff[key][2]}\n`;
     } else if (diff[key][0] === 'changed object') {
       depth += 1;
-      result += `${indent}  ${key}:  {\n`;  
+      result += `${indent}  ${key}:  {\n`;
       result += formatToStylish(diff[key][1], depth);
     }
   });
   if (depth === 1) {
-    result += '}'
+    result += '}';
   }
   return result;
 };
