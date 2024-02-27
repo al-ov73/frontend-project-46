@@ -14,10 +14,19 @@ const plainJson2 = fs.readFileSync(`${__dirname}/../__fixtures__/plainJson2.json
 const plainYml1 = fs.readFileSync(`${__dirname}/../__fixtures__/plainYml1.yml`, 'utf-8');
 const plainYml2 = fs.readFileSync(`${__dirname}/../__fixtures__/plainYml2.yml`, 'utf-8');
 
+const recurseExpected = fs.readFileSync(`${__dirname}/../__fixtures__/stylishExpected.json`, 'utf-8');
+
+const recurseJson1 = fs.readFileSync(`${__dirname}/../__fixtures__/recurseJson1.json`, 'utf-8');
+const recurseJson2 = fs.readFileSync(`${__dirname}/../__fixtures__/recurseJson2.json`, 'utf-8');
+
 test('plain json-files', () => {
   expect(generateDiff(plainJson1, '.json', plainJson2, '.json')).toEqual(plainExpected);
 });
 
 test('plain yaml-files', () => {
   expect(generateDiff(plainYml1, '.yml', plainYml2, '.yml')).toEqual(plainExpected);
+});
+
+test('recurse json-files', () => {
+  expect(generateDiff(recurseJson1, '.json', recurseJson2, '.json')).toEqual(recurseExpected);
 });

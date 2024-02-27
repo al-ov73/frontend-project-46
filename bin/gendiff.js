@@ -5,6 +5,7 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import generateDiff from '../src/index.js';
+import formatToStylish from '../src/formaters.js';
 
 const program = new Command();
 
@@ -22,8 +23,8 @@ program
     const extension2 = path.extname(absolutePath2);
     const file1 = fs.readFileSync(absolutePath1);
     const file2 = fs.readFileSync(absolutePath2);
-    const result = generateDiff(file1, extension1, file2, extension2);
-    console.log(result);
+    const diff = generateDiff(file1, extension1, file2, extension2);
+    console.log(diff);
   });
 
 program.parse();
