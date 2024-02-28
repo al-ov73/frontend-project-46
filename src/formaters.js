@@ -3,29 +3,22 @@ import isObject from './utils.js';
 const replacer = ' ';
 
 const strObject = (obj, depth) => {
-  let resultValue = '';
-  depth -= 1;
-
-  const iter = (data, result, dep) => {
-    const indent = replacer.repeat(dep * 4);
-    if (isObject(data)) {
-      Object.keys(data).forEach((key) => {
-        if (isObject(data[key])) {
-          const value = iter(data[key], result, dep + 1);
-          result += `    ${key}: {\n`;
-          result += `    ${value}`;
-          result += '    }\n';
-        } else {
-          result += `    ${key}: ${data[key]}\n`;
-        }
-      });
-    } else {
-      result += ` ${indent}${data}\n`;
-    }
-    return result;
-  };
-  resultValue = iter(obj, resultValue, depth);
-  return resultValue;
+  let result = isObject(obj) ? '{\n' : '';
+  const indent = replacer.repeat(depth * 4);
+  if (isObject(obj)) {
+    Object.keys(obj).forEach((key) => {
+      if (isObject(obj[key])) {
+        const value = strObject(obj[key], depth + 1);
+        result += `${indent}    ${key}: ${value}`;
+      } else {
+        result += `${indent}    ${key}: ${obj[key]}\n`;
+      }
+    });
+    result += `${indent}}\n`;
+  } else {
+    result += `${obj}\n`;
+  }
+  return result;
 };
 
 const formatToStylish = (diff, depth = 1, result = '') => {
@@ -43,20 +36,20 @@ const formatToStylish = (diff, depth = 1, result = '') => {
   allKeys.sort().forEach((key) => {
     if (diff[key][0] === 'removed') {
       const value = diff[key][1];
-      result += `${indent}- ${key}:${strObject(value, depth)}`;
+      result += `${indent}- ${key}: ${strObject(value, depth)}`;
     } else if (diff[key][0] === 'added') {
       const value = diff[key][1];
-      result += `${indent}+ ${key}:${strObject(value, depth)}`;
+      result += `${indent}+ ${key}: ${strObject(value, depth)}`;
     } else if (diff[key][0] === 'not changed') {
       const value = diff[key][1];
-      result += `${indent}  ${key}:${strObject(value, depth)}`;
+      result += `${indent}  ${key}: ${strObject(value, depth)}`;
     } else if (diff[key][0] === 'changed value') {
-      result += `${indent}- ${key}:${strObject(diff[key][1], depth)}`;
-      result += `${indent}+ ${key}:${strObject(diff[key][2], depth)}`;
+      result += `${indent}- ${key}: ${strObject(diff[key][1], depth)}`;
+      result += `${indent}+ ${key}: ${strObject(diff[key][2], depth)}`;
     } else if (diff[key][0] === 'changed object') {
-      depth += 1;
       result += `${indent}  ${key}: {\n`;
       result += formatToStylish(diff[key][1], depth + 1);
+      result += `${indent}  }\n`;
     }
   });
   if (depth === 1) {

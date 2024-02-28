@@ -14,7 +14,7 @@ const plainJson2 = fs.readFileSync(`${__dirname}/../__fixtures__/plainJson2.json
 const plainYml1 = fs.readFileSync(`${__dirname}/../__fixtures__/plainYml1.yml`, 'utf-8');
 const plainYml2 = fs.readFileSync(`${__dirname}/../__fixtures__/plainYml2.yml`, 'utf-8');
 
-const recurseExpected = fs.readFileSync(`${__dirname}/../__fixtures__/stylishExpected.json`, 'utf-8');
+const recurseExpected = fs.readFileSync(`${__dirname}/../__fixtures__/stylishExpected.yml`, 'utf-8');
 
 const recurseJson1 = fs.readFileSync(`${__dirname}/../__fixtures__/recurseJson1.json`, 'utf-8');
 const recurseJson2 = fs.readFileSync(`${__dirname}/../__fixtures__/recurseJson2.json`, 'utf-8');
