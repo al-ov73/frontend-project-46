@@ -1,4 +1,5 @@
-import formatToStylish from './formaters.js';
+import formatToPlain from '../formatters/plain.js';
+import formatToStylish from '../formatters/stylish.js';
 import parseFile from './parsers.js';
 import isObject from './utils.js';
 
@@ -31,12 +32,21 @@ const generateAst = (obj1, obj2) => {
   return result;
 };
 
-const generateDiff = (file1, ext1, file2, ext2) => {
-  const obj1 = parseFile(file1, ext1);
-  const obj2 = parseFile(file2, ext2);
+const generateDiff = (filePath1, filePath2, format = 'stylish') => {
+  const obj1 = parseFile(filePath1);
+  const obj2 = parseFile(filePath2);
   const ast = generateAst(obj1, obj2);
-  const diff = formatToStylish(ast);
-  return diff;
+  let diff;
+  switch (format) {
+    case 'stylish':
+      diff = formatToStylish(ast);
+      return diff;
+    case 'plain':
+      diff = formatToPlain(ast);
+      return diff;
+    default:
+      return 'unknown format style :(';
+  }
 };
 
 export default generateDiff;

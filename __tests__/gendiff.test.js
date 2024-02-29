@@ -6,27 +6,15 @@ import generateDiff from '../src/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const plainExpected = fs.readFileSync(`${__dirname}/../__fixtures__/plainExpected.json`, 'utf-8');
+const recurseJson1 = `${__dirname}/../__fixtures__/recurseJson1.json`;
+const recurseJson2 = `${__dirname}/../__fixtures__/recurseJson2.json`;
+const stylishExpected = fs.readFileSync(`${__dirname}/../__fixtures__/stylishExpected.yml`, 'utf-8');
+const plainExpected = fs.readFileSync(`${__dirname}/../__fixtures__/plainExpected.yml`, 'utf-8');
 
-const plainJson1 = fs.readFileSync(`${__dirname}/../__fixtures__/plainJson1.json`, 'utf-8');
-const plainJson2 = fs.readFileSync(`${__dirname}/../__fixtures__/plainJson2.json`, 'utf-8');
-
-const plainYml1 = fs.readFileSync(`${__dirname}/../__fixtures__/plainYml1.yml`, 'utf-8');
-const plainYml2 = fs.readFileSync(`${__dirname}/../__fixtures__/plainYml2.yml`, 'utf-8');
-
-const recurseExpected = fs.readFileSync(`${__dirname}/../__fixtures__/stylishExpected.yml`, 'utf-8');
-
-const recurseJson1 = fs.readFileSync(`${__dirname}/../__fixtures__/recurseJson1.json`, 'utf-8');
-const recurseJson2 = fs.readFileSync(`${__dirname}/../__fixtures__/recurseJson2.json`, 'utf-8');
-
-test('plain json-files', () => {
-  expect(generateDiff(plainJson1, '.json', plainJson2, '.json')).toEqual(plainExpected);
+test('recurse stylish format', () => {
+  expect(generateDiff(recurseJson1, recurseJson2, 'stylish')).toEqual(stylishExpected);
 });
 
-test('plain yaml-files', () => {
-  expect(generateDiff(plainYml1, '.yml', plainYml2, '.yml')).toEqual(plainExpected);
-});
-
-test('recurse json-files', () => {
-  expect(generateDiff(recurseJson1, '.json', recurseJson2, '.json')).toEqual(recurseExpected);
+test('recurse plain format', () => {
+  expect(generateDiff(recurseJson1, recurseJson2, 'plain')).toEqual(plainExpected);
 });

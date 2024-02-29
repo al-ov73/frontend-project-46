@@ -1,4 +1,4 @@
-import isObject from './utils.js';
+import isObject from '../src/utils.js';
 
 const replacer = ' ';
 

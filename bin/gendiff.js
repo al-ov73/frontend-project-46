@@ -2,8 +2,6 @@
 
 import { Command } from 'commander';
 
-import fs from 'fs';
-import path from 'path';
 import generateDiff from '../src/index.js';
 
 const program = new Command();
@@ -13,16 +11,9 @@ program
   .version('0.1.0')
   .argument('<filepath1>')
   .argument('<filepath2>')
-  .option('-f, --format [type]', 'output format')
-  .action((filepath1, filepath2) => {
-    const cwd = process.cwd();
-    const absolutePath1 = path.resolve(cwd, filepath1);
-    const absolutePath2 = path.resolve(cwd, filepath2);
-    const extension1 = path.extname(absolutePath1);
-    const extension2 = path.extname(absolutePath2);
-    const file1 = fs.readFileSync(absolutePath1);
-    const file2 = fs.readFileSync(absolutePath2);
-    const diff = generateDiff(file1, extension1, file2, extension2);
+  .option('-f, --format <type>', 'output format', 'stylish')
+  .action((filepath1, filepath2, option) => {
+    const diff = generateDiff(filepath1, filepath2, option.format);
     console.log(diff);
   });
 
