@@ -12,7 +12,6 @@ const generateAst = (obj1, obj2) => {
     }
     return [...acc, item];
   }, []);
-
   const result = {};
   allKeys.sort().forEach((key) => {
     if (keys1.includes(key) && !keys2.includes(key)) {
@@ -43,7 +42,7 @@ const generateDiff = (filePath1, filePath2, format = 'stylish') => {
       return diff;
     case 'plain':
       diff = formatToPlain(ast);
-      return diff;
+      return diff.slice(0, -1);
     default:
       return 'unknown format style :(';
   }
