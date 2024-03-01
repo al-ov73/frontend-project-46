@@ -5,6 +5,17 @@
 
 <a href="https://codeclimate.com/github/al-ov73/frontend-project-46/test_coverage"><img src="https://api.codeclimate.com/v1/badges/d0037ab84ae3f7863cd3/test_coverage" /></a>
 
+Второй проект обучения на Хекслет: генерация файла-сравнения двух конфигураионных файлов в форматах json, yaml и yml с тремя различными вариантами вывода - stylish, plain и json.
+
+Установка:
+
+```
+git clone git@github.com:al-ov73/frontend-project-46.git
+cd frontend-project-46
+make install
+gendiff -h
+```
+
 Примеры работы:
 
 Сравнение двух плоских json-файлов
@@ -18,3 +29,6 @@
 
 Сравнение двух json файлов в формате plain
 [![asciicast](https://asciinema.org/a/644498.svg)](https://asciinema.org/a/644498)
+
+Сравнение двух json файлов в формате json
+[![asciicast](https://asciinema.org/a/644799.svg)](https://asciinema.org/a/644799)

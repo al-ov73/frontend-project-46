@@ -1,3 +1,4 @@
+import formatToJson from '../formatters/json.js';
 import formatToPlain from '../formatters/plain.js';
 import formatToStylish from '../formatters/stylish.js';
 import parseFile from './parsers.js';
@@ -43,6 +44,9 @@ const generateDiff = (filePath1, filePath2, format = 'stylish') => {
     case 'plain':
       diff = formatToPlain(ast);
       return diff.slice(0, -1);
+    case 'json':
+      diff = formatToJson(ast);
+      return diff;
     default:
       return 'unknown format style :(';
   }
