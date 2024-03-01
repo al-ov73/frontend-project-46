@@ -9,8 +9,8 @@ const strObject = (obj) => {
       return `${obj}`;
     default:
       return '[complex value]';
-  };
-}
+  }
+};
 
 const formatToPlain = (diff, result = '', path = '') => {
   const allKeys = Object.keys(diff).reduce((acc, item) => {
@@ -20,7 +20,7 @@ const formatToPlain = (diff, result = '', path = '') => {
     return [...acc, item];
   }, []);
   allKeys.sort().forEach((key) => {
-    const pathToKey = `${path}.${key}`
+    const pathToKey = `${path}.${key}`;
     const newPath = (pathToKey).startsWith('.') ? pathToKey.slice(1) : pathToKey;
     if (diff[key][0] === 'removed') {
       result += `Property '${newPath}' was removed\n`;
@@ -32,7 +32,7 @@ const formatToPlain = (diff, result = '', path = '') => {
       const newValue = strObject(diff[key][2]);
       result += `Property '${newPath}' was updated. From ${oldValue} to ${newValue}\n`;
     } else if (diff[key][0] === 'changed object') {
-      result = formatToPlain(diff[key][1], result, pathToKey)
+      result = formatToPlain(diff[key][1], result, pathToKey);
     }
   });
   return result;
