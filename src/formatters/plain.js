@@ -6,6 +6,7 @@ const stringify = (obj) => {
     case 'string':
       return `'${obj}'`;
     case 'boolean':
+    case 'number':
       return `${obj}`;
     default:
       return '[complex value]';
