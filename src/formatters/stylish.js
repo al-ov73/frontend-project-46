@@ -2,27 +2,28 @@ import isObject from '../utils.js';
 
 const replacer = ' ';
 
-const strObject = (obj, depth) => {
-  let result = isObject(obj) ? '{\n' : '';
+const stringify = (data, depth) => {
+  let stringifyData = isObject(data) ? '{\n' : '';
   const indent = replacer.repeat(depth * 4);
-  if (isObject(obj)) {
-    Object.keys(obj).forEach((key) => {
-      if (isObject(obj[key])) {
-        const value = strObject(obj[key], depth + 1);
-        result += `${indent}    ${key}: ${value}`;
+  if (isObject(data)) {
+    Object.keys(data).forEach((key) => {
+      if (isObject(data[key])) {
+        const value = stringify(data[key], depth + 1);
+        stringifyData += `${indent}    ${key}: ${value}`;
       } else {
-        result += `${indent}    ${key}: ${obj[key]}\n`;
+        stringifyData += `${indent}    ${key}: ${data[key]}\n`;
       }
     });
-    result += `${indent}}\n`;
+    stringifyData += `${indent}}\n`;
   } else {
-    result += `${obj}\n`;
+    stringifyData += `${data}\n`;
   }
-  return result;
+  return stringifyData;
 };
 
 const formatToStylish = (ast) => {
-  const innerWalk = (diff, depth = 1, result = '') => {
+  let result = '';
+  const innerWalk = (diff, depth = 1) => {
     const allKeys = Object.keys(diff).reduce((acc, item) => {
       if (acc.includes(item)) {
         return acc;
@@ -36,20 +37,17 @@ const formatToStylish = (ast) => {
 
     allKeys.sort().forEach((key) => {
       if (diff[key].type === 'removed') {
-        const { value } = diff[key];
-        result += `${indent}- ${key}: ${strObject(value, depth)}`;
+        result += `${indent}- ${key}: ${stringify(diff[key].value, depth)}`;
       } else if (diff[key].type === 'added') {
-        const { value } = diff[key];
-        result += `${indent}+ ${key}: ${strObject(value, depth)}`;
+        result += `${indent}+ ${key}: ${stringify(diff[key].value, depth)}`;
       } else if (diff[key].type === 'not changed') {
-        const { value } = diff[key];
-        result += `${indent}  ${key}: ${strObject(value, depth)}`;
+        result += `${indent}  ${key}: ${stringify(diff[key].value, depth)}`;
       } else if (diff[key].type === 'changed value') {
-        result += `${indent}- ${key}: ${strObject(diff[key].valueFrom, depth)}`;
-        result += `${indent}+ ${key}: ${strObject(diff[key].valueTo, depth)}`;
+        result += `${indent}- ${key}: ${stringify(diff[key].valueFrom, depth)}`;
+        result += `${indent}+ ${key}: ${stringify(diff[key].valueTo, depth)}`;
       } else if (diff[key].type === 'changed object') {
         result += `${indent}  ${key}: {\n`;
-        result += innerWalk(diff[key].value, depth + 1);
+        innerWalk(diff[key].value, depth + 1);
         result += `${indent}  }\n`;
       }
     });

@@ -1,20 +1,21 @@
-const stringify = (obj) => {
-  if (obj === null) {
+const stringify = (data) => {
+  if (data === null) {
     return 'null';
   }
-  switch (typeof obj) {
+  switch (typeof data) {
     case 'string':
-      return `'${obj}'`;
+      return `'${data}'`;
     case 'boolean':
     case 'number':
-      return `${obj}`;
+      return `${data}`;
     default:
       return '[complex value]';
   }
 };
 
 const formatToPlain = (ast) => {
-  const innerWalk = (diff, result = '', path = '') => {
+  let result = '';
+  const innerWalk = (diff, path = '') => {
     const allKeys = Object.keys(diff).reduce((acc, item) => {
       if (acc.includes(item)) {
         return acc;
@@ -34,7 +35,7 @@ const formatToPlain = (ast) => {
         const newValue = stringify(diff[key].valueTo);
         result += `Property '${newPath}' was updated. From ${oldValue} to ${newValue}\n`;
       } else if (diff[key].type === 'changed object') {
-        result = innerWalk(diff[key].value, result, pathToKey);
+        result = innerWalk(diff[key].value, pathToKey);
       }
     });
     return result;
