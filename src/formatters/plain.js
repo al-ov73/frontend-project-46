@@ -16,20 +16,22 @@ const stringify = (data) => {
 const formatToPlain = (ast) => {
   const innerWalk = (diff, path = '') => {
     const result = diff.flatMap((elem) => {
+      let newLine;
       const pathToKey = `${path}.${elem.key}`;
       const newPath = (pathToKey).startsWith('.') ? pathToKey.slice(1) : pathToKey;
       if (elem.type === 'removed') {
-        return `Property '${newPath}' was removed\n`;
+        newLine = `Property '${newPath}' was removed\n`;
       } if (elem.type === 'added') {
         const newValue = stringify(elem.value);
-        return `Property '${newPath}' was added with value: ${newValue}\n`;
+        newLine = `Property '${newPath}' was added with value: ${newValue}\n`;
       } if (elem.type === 'changed value') {
         const oldValue = stringify(elem.valueFrom);
         const newValue = stringify(elem.valueTo);
-        return `Property '${newPath}' was updated. From ${oldValue} to ${newValue}\n`;
+        newLine = `Property '${newPath}' was updated. From ${oldValue} to ${newValue}\n`;
       } if (elem.type === 'changed object') {
-        return innerWalk(elem.value, pathToKey);
+        newLine = innerWalk(elem.value, pathToKey);
       }
+      return newLine;
     });
     return result;
   };

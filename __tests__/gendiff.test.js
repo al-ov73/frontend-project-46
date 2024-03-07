@@ -13,9 +13,9 @@ const fixturesPath = `${__dirname}/../__fixtures__/`;
 const recurseJson1 = `${fixturesPath}recurseJson1.json`;
 const recurseJson2 = `${fixturesPath}recurseJson2.json`;
 // expected fixtures
-const stylishExpected = fs.readFileSync(`${fixturesPath}stylishExpected.txt`, 'utf-8');
+// const stylishExpected = fs.readFileSync(`${fixturesPath}stylishExpected.txt`, 'utf-8');
 const plainExpected = fs.readFileSync(`${fixturesPath}plainExpected.txt`, 'utf-8');
-const jsonExpected = fs.readFileSync(`${fixturesPath}jsonExpected.txt`, 'utf-8');
+// const jsonExpected = fs.readFileSync(`${fixturesPath}jsonExpected.txt`, 'utf-8');
 
 test.each([
   // {
