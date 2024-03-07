@@ -12,19 +12,15 @@ const getDataFromFile = (dataPath) => {
 
 const parseData = (dataPath) => {
   const { data, format } = getDataFromFile(dataPath);
-  let obj;
   switch (format) {
     case 'json':
-      obj = JSON.parse(data);
-      break;
+      return JSON.parse(data);
     case 'yml':
     case 'yaml':
-      obj = yaml.load(data);
-      break;
+      return yaml.load(data);
     default:
       return 'unknown file extension :(';
   }
-  return obj;
 };
 
 export default parseData;

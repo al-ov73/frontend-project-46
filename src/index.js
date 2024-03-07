@@ -19,7 +19,6 @@ const generateAst = (config1, config2) => {
     } if (isObject(config1[key]) && isObject(config2[key])) {
       return { key, type: 'changed object', value: generateAst(config1[key], config2[key]) };
     }
-
     return {
       key, type: 'changed value', valueFrom: config1[key], valueTo: config2[key],
     };
@@ -33,10 +32,8 @@ const generateDiffFromAst = (ast, format) => {
       return formatToStylish(ast);
     case 'plain':
       return formatToPlain(ast).slice(0, -1);
-      // return diff.slice(0, -1);
     case 'json':
       return JSON.stringify(ast);
-      // return diff;
     default:
       return 'unknown format style :(';
   }
