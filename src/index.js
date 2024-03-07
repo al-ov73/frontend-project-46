@@ -8,35 +8,35 @@ const generateAst = (config1, config2) => {
   const keys1 = Object.keys(config1);
   const keys2 = Object.keys(config2);
   const allKeys = _.union(keys1, keys2);
-  const result = {};
-  allKeys.sort().forEach((key) => {
+  const sortedKeys = _.sortBy(allKeys);
+  const result = sortedKeys.map((key) => {
     if (keys1.includes(key) && !keys2.includes(key)) {
-      result[key] = { type: 'removed', value: config1[key] };
-    } else if (!keys1.includes(key) && keys2.includes(key)) {
-      result[key] = { type: 'added', value: config2[key] };
-    } else if ((config1[key] === config2[key])) {
-      result[key] = { type: 'not changed', value: config1[key] };
-    } else if (isObject(config1[key]) && isObject(config2[key])) {
-      result[key] = { type: 'changed object', value: generateAst(config1[key], config2[key]) };
-    } else {
-      result[key] = { type: 'changed value', valueFrom: config1[key], valueTo: config2[key] };
+      return { key, type: 'removed', value: config1[key] };
+    } if (!keys1.includes(key) && keys2.includes(key)) {
+      return { key, type: 'added', value: config2[key] };
+    } if ((config1[key] === config2[key])) {
+      return { key, type: 'not changed', value: config1[key] };
+    } if (isObject(config1[key]) && isObject(config2[key])) {
+      return { key, type: 'changed object', value: generateAst(config1[key], config2[key]) };
     }
+
+    return {
+      key, type: 'changed value', valueFrom: config1[key], valueTo: config2[key],
+    };
   });
   return result;
 };
 
 const generateDiffFromAst = (ast, format) => {
-  let diff;
   switch (format) {
     case 'stylish':
-      diff = formatToStylish(ast);
-      return diff;
+      return formatToStylish(ast);
     case 'plain':
-      diff = formatToPlain(ast);
-      return diff.slice(0, -1);
+      return formatToPlain(ast).slice(0, -1);
+      // return diff.slice(0, -1);
     case 'json':
-      diff = JSON.stringify(ast);
-      return diff;
+      return JSON.stringify(ast);
+      // return diff;
     default:
       return 'unknown format style :(';
   }

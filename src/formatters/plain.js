@@ -14,33 +14,27 @@ const stringify = (data) => {
 };
 
 const formatToPlain = (ast) => {
-  let result = '';
   const innerWalk = (diff, path = '') => {
-    const allKeys = Object.keys(diff).reduce((acc, item) => {
-      if (acc.includes(item)) {
-        return acc;
-      }
-      return [...acc, item];
-    }, []);
-    allKeys.sort().forEach((key) => {
-      const pathToKey = `${path}.${key}`;
+    const result = diff.flatMap((elem) => {
+      const pathToKey = `${path}.${elem.key}`;
       const newPath = (pathToKey).startsWith('.') ? pathToKey.slice(1) : pathToKey;
-      if (diff[key].type === 'removed') {
-        result += `Property '${newPath}' was removed\n`;
-      } else if (diff[key].type === 'added') {
-        const newValue = stringify(diff[key].value);
-        result += `Property '${newPath}' was added with value: ${newValue}\n`;
-      } else if (diff[key].type === 'changed value') {
-        const oldValue = stringify(diff[key].valueFrom);
-        const newValue = stringify(diff[key].valueTo);
-        result += `Property '${newPath}' was updated. From ${oldValue} to ${newValue}\n`;
-      } else if (diff[key].type === 'changed object') {
-        result = innerWalk(diff[key].value, pathToKey);
+      if (elem.type === 'removed') {
+        return `Property '${newPath}' was removed\n`;
+      } if (elem.type === 'added') {
+        const newValue = stringify(elem.value);
+        return `Property '${newPath}' was added with value: ${newValue}\n`;
+      } if (elem.type === 'changed value') {
+        const oldValue = stringify(elem.valueFrom);
+        const newValue = stringify(elem.valueTo);
+        return `Property '${newPath}' was updated. From ${oldValue} to ${newValue}\n`;
+      } if (elem.type === 'changed object') {
+        return innerWalk(elem.value, pathToKey);
       }
     });
     return result;
   };
-  return innerWalk(ast);
+  const arrayDiff = innerWalk(ast);
+  return arrayDiff.join('');
 };
 
 export default formatToPlain;
