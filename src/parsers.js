@@ -5,22 +5,21 @@ import path from 'path';
 const getDataFromFile = (dataPath) => {
   const cwd = process.cwd();
   const absolutePath = path.resolve(cwd, dataPath);
-  const format = path.extname(absolutePath).replace('.', '');
+  const datatype = path.extname(absolutePath).replace('.', '');
   const data = fs.readFileSync(absolutePath);
-  return { data, format };
+  return { data, datatype };
 };
 
-const parseData = (dataPath) => {
-  const { data, format } = getDataFromFile(dataPath);
-  switch (format) {
+const parseData = (filedata, datatype) => {
+  switch (datatype) {
     case 'json':
-      return JSON.parse(data);
+      return JSON.parse(filedata);
     case 'yml':
     case 'yaml':
-      return yaml.load(data);
+      return yaml.load(filedata);
     default:
-      return 'unknown file extension :(';
+      return `${datatype} - unknown file extension :(`;
   }
 };
 
-export default parseData;
+export { getDataFromFile, parseData };

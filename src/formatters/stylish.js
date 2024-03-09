@@ -1,13 +1,13 @@
-import isObject from '../utils.js';
+import _ from 'lodash';
 
 const REPLACER = ' ';
 
 const stringify = (rawData, currentDepth) => {
   const innerWalk = (data, depth) => {
     const indent = REPLACER.repeat(depth * 4);
-    if (isObject(data)) {
+    if (_.isPlainObject(data)) {
       const stringifyData = Object.keys(data).map((key) => {
-        if (isObject(data[key])) {
+        if (_.isPlainObject(data[key])) {
           const innerValue = innerWalk(data[key], depth + 1);
           return `${indent}    ${key}: ${innerValue}`;
         }
@@ -31,10 +31,10 @@ const formatToStylish = (ast) => {
         return `${indent}+ ${param.key}: ${stringify(param.value, depth)}`;
       } if (param.type === 'not changed') {
         return `${indent}  ${param.key}: ${stringify(param.value, depth)}`;
-      } if (param.type === 'changed value') {
-        return `${indent}- ${param.key}: ${stringify(param.valueFrom, depth)}${indent}+ ${param.key}: ${stringify(param.valueTo, depth)}`;
+      } if (param.type === 'changed') {
+        return `${indent}- ${param.key}: ${stringify(param.valueFromData1, depth)}${indent}+ ${param.key}: ${stringify(param.valueFromData2, depth)}`;
       }
-      return `${indent}  ${param.key}: {\n${innerWalk(param.value, depth + 1)}${indent}  }\n`;
+      return `${indent}  ${param.key}: {\n${innerWalk(param.children, depth + 1)}${indent}  }\n`;
     }).join('');
     return result;
   };
