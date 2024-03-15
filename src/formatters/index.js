@@ -1,5 +1,5 @@
-import formatToPlain from './plain';
-import formatToStylish from './stylish';
+import formatToPlain from './plain.js';
+import formatToStylish from './stylish.js';
 
 const formatDiffFromAst = (ast, format) => {
   switch (format) {

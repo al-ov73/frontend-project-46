@@ -35,7 +35,7 @@ test.each([
     format: 'json',
     expected: jsonDecodedExpected,
   },
-])('recurse .json with $format format', ({
+])('test .json with $format format', ({
   path1, path2, format, expected,
 }) => {
   expect(generateDiff(path1, path2, format)).toEqual(expected);
@@ -60,7 +60,7 @@ test.each([
     format: 'json',
     expected: jsonDecodedExpected,
   },
-])('recurse .yml with $format format', ({
+])('test .yml with $format format', ({
   path1, path2, format, expected,
 }) => {
   expect(generateDiff(path1, path2, format)).toEqual(expected);
@@ -79,7 +79,7 @@ test.each([
     extension: 'yaml',
     expected: stylishExpected,
   },
-])('recurse .$extension with default format', ({
+])('test .$extension with default format', ({
   path1, path2, expected,
 }) => {
   expect(generateDiff(path1, path2, undefined)).toEqual(expected);
