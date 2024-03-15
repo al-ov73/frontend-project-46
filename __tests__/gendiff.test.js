@@ -10,11 +10,6 @@ const getPathToFile = (filename) => {
   return `${fixturesPath}${filename}`;
 };
 
-// fixtures
-const recurseJson1 = getPathToFile('recurseJson1.json');
-const recurseJson2 = getPathToFile('recurseJson2.json');
-const recurseYaml1 = getPathToFile('recurseYaml1.yml');
-const recurseYaml2 = getPathToFile('recurseYaml2.yml');
 // expected fixtures
 const stylishExpected = fs.readFileSync(getPathToFile('stylishExpected.txt'), 'utf-8');
 const plainExpected = fs.readFileSync(getPathToFile('plainExpected.txt'), 'utf-8');
@@ -23,13 +18,22 @@ const jsonDecodedExpected = JSON.parse(jsonExpected);
 
 test.each([
   {
-    path1: recurseJson1, path2: recurseJson2, format: 'stylish', expected: stylishExpected,
+    path1: getPathToFile('file1.json'),
+    path2: getPathToFile('file2.json'),
+    format: 'stylish',
+    expected: stylishExpected,
   },
   {
-    path1: recurseJson1, path2: recurseJson2, format: 'plain', expected: plainExpected,
+    path1: getPathToFile('file1.json'),
+    path2: getPathToFile('file2.json'),
+    format: 'plain',
+    expected: plainExpected,
   },
   {
-    path1: recurseJson1, path2: recurseJson2, format: 'json', expected: jsonDecodedExpected,
+    path1: getPathToFile('file1.json'),
+    path2: getPathToFile('file2.json'),
+    format: 'json',
+    expected: jsonDecodedExpected,
   },
 ])('recurse .json with $format format', ({
   path1, path2, format, expected,
@@ -39,13 +43,22 @@ test.each([
 
 test.each([
   {
-    path1: recurseYaml1, path2: recurseYaml2, format: 'stylish', expected: stylishExpected,
+    path1: getPathToFile('file1.yml'),
+    path2: getPathToFile('file2.yml'),
+    format: 'stylish',
+    expected: stylishExpected,
   },
   {
-    path1: recurseYaml1, path2: recurseYaml2, format: 'plain', expected: plainExpected,
+    path1: getPathToFile('file1.yml'),
+    path2: getPathToFile('file2.yml'),
+    format: 'plain',
+    expected: plainExpected,
   },
   {
-    path1: recurseYaml1, path2: recurseYaml2, format: 'json', expected: jsonDecodedExpected,
+    path1: getPathToFile('file1.yml'),
+    path2: getPathToFile('file2.yml'),
+    format: 'json',
+    expected: jsonDecodedExpected,
   },
 ])('recurse .yml with $format format', ({
   path1, path2, format, expected,
@@ -55,13 +68,19 @@ test.each([
 
 test.each([
   {
-    path1: recurseJson1, path2: recurseJson2, extension: 'json', expected: stylishExpected,
+    path1: getPathToFile('file1.json'),
+    path2: getPathToFile('file2.json'),
+    extension: 'json',
+    expected: stylishExpected,
   },
   {
-    path1: recurseYaml1, path2: recurseYaml2, extension: 'yaml', expected: stylishExpected,
+    path1: getPathToFile('file1.yml'),
+    path2: getPathToFile('file2.yml'),
+    extension: 'yaml',
+    expected: stylishExpected,
   },
 ])('recurse .$extension with default format', ({
   path1, path2, expected,
 }) => {
-  expect(generateDiff(path1, path2)).toEqual(expected);
+  expect(generateDiff(path1, path2, undefined)).toEqual(expected);
 });

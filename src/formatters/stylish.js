@@ -8,8 +8,8 @@ const stringify = (rawData, currentDepth) => {
     if (_.isPlainObject(data)) {
       const stringifyData = Object.keys(data).map((key) => {
         if (_.isPlainObject(data[key])) {
-          const innerValue = innerWalk(data[key], depth + 1);
-          return `${indent}    ${key}: ${innerValue}`;
+          const value = innerWalk(data[key], depth + 1);
+          return `${indent}    ${key}: ${value}`;
         }
         return `${indent}    ${key}: ${data[key]}\n`;
       }).join('');
@@ -32,7 +32,7 @@ const formatToStylish = (ast) => {
       } if (param.type === 'not changed') {
         return `${indent}  ${param.key}: ${stringify(param.value, depth)}`;
       } if (param.type === 'changed') {
-        return `${indent}- ${param.key}: ${stringify(param.valueFromData1, depth)}${indent}+ ${param.key}: ${stringify(param.valueFromData2, depth)}`;
+        return `${indent}- ${param.key}: ${stringify(param.value1, depth)}${indent}+ ${param.key}: ${stringify(param.value2, depth)}`;
       }
       return `${indent}  ${param.key}: {\n${innerWalk(param.children, depth + 1)}${indent}  }\n`;
     }).join('');
