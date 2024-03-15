@@ -35,7 +35,7 @@ test.each([
     format: 'json',
     expected: jsonDecodedExpected,
   },
-])('test .json with $format format', ({
+])('.json with $format format', ({
   path1, path2, format, expected,
 }) => {
   expect(generateDiff(path1, path2, format)).toEqual(expected);
@@ -60,7 +60,7 @@ test.each([
     format: 'json',
     expected: jsonDecodedExpected,
   },
-])('test .yml with $format format', ({
+])('.yml with $format format', ({
   path1, path2, format, expected,
 }) => {
   expect(generateDiff(path1, path2, format)).toEqual(expected);
@@ -79,7 +79,7 @@ test.each([
     extension: 'yaml',
     expected: stylishExpected,
   },
-])('test .$extension with default format', ({
+])('.$extension with default format', ({
   path1, path2, expected,
 }) => {
   expect(generateDiff(path1, path2, undefined)).toEqual(expected);
